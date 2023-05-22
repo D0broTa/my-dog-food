@@ -1,8 +1,10 @@
+import { getItem } from "./localStorage";
+
 const onResponse = (res) => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
 const config = {
-    url: 'https://api.react-learning.ru',
-    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjJmOTk5MmFlNWM0MGMxMGMxMWRmZTQiLCJpYXQiOjE2NDcyODY2ODEsImV4cCI6MTY3ODgyMjY4MX0.WHKXAErKZtY445yXecOFZsx981MuXicJti-okSY-tac',
-}
+    url: 'https://fakestoreapi.com',
+    token: getItem('JWT'),
+};
 
 class Api {
     constructor({url, token}) {
@@ -10,14 +12,33 @@ class Api {
         this.token = `Bearer ${token}`;
     }
 
-    getAllProducts() {
+    getAllProducts() {                                              //получаем все продукты
         return fetch(`${this.url}/products`, {
             headers: {
                 Authorization: this.token,
-            }
+                'Content-Type': 'application/json'
+            },
         })
         .then(onResponse);
     };
+    getAllUsers() {                                                 //получаем имеющихся пользователей
+        return fetch(`${this.url}/users`, {
+            headers: {
+                Authorization: this.token,
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(onResponse);
+    };
+    
+
+    getUserInfo() {
+        return fetch(`${this.url}/users/`, {
+          headers: {
+            Authorization: this.token,
+          },
+        }).then(onResponse);
+      }
 }
 
 const api = new Api(config);

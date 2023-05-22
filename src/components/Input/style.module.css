@@ -1,0 +1,11 @@
+.input {
+    border-radius: 10px;
+    background-color: transparent;
+    border: 2px solid gray;
+    padding: 14px 20px;
+}
+/* почему то не убирается черная граница, видимо по умолчанию */
+.input:focus {
+    border: 5px solid yellow;
+}
+
