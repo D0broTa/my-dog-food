@@ -1,4 +1,5 @@
-function ProductPage() {
+function ProductPage({title}) {
+    document.title = `${title}`
     return (
         <div>Страница продукта</div>
     )

@@ -7,13 +7,13 @@ const onResponse = (res) => res.ok ? res.json() : (Promise.reject(`Ошибка:
 
 const BASE_URL = 'https://fakestoreapi.com'
 
-export const signup = (data) => {                       //регистрация
-    return fetch(`${BASE_URL}/signup`, {
-        method: "POST",
-        headers, //headers: headers
-        body: JSON.stringify(data)
-    }).then(onResponse)
-};
+// export const signup = (data) => {                       //регистрация
+//     return fetch(`${BASE_URL}/signup`, {
+//         method: "POST",
+//         headers, //headers: headers
+//         body: JSON.stringify(data)
+//     }).then(onResponse)
+// };
 
 export const signin = (data) => {                       //авторизация
     return fetch(`${BASE_URL}/auth/login`, {
@@ -24,12 +24,12 @@ export const signin = (data) => {                       //авторизация
     
 };
 
-export const checkToken = (token) => {                  //проверка токена
-    return fetch(`${BASE_URL}/auth/login`, {
-        method: "POST",
-        headers: {
-            ...headers,
-            authorization: `${token}`
-        },
-    }).then(onResponse)
-}
+// export const checkToken = (token) => {                  //проверка токена
+//     return fetch(`${BASE_URL}/auth/login`, {
+//         method: "POST",
+//         headers: {
+//             ...headers,
+//             authorization: `${token}`
+//         },
+//     }).then(onResponse)
+// }

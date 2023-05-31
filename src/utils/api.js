@@ -9,15 +9,15 @@ const config = {
 class Api {
     constructor({url, token}) {
         this.url = url;
-        this.token = `Bearer ${token}`;
+        // this.token = `Bearer ${token}`;
     }
 
     getAllProducts() {                                              //получаем все продукты
         return fetch(`${this.url}/products`, {
-            headers: {
-                Authorization: this.token,
-                'Content-Type': 'application/json'
-            },
+            // headers: {
+            //     Authorization: this.token,
+            //     'Content-Type': 'application/json'
+            // },
         })
         .then(onResponse);
     };
@@ -32,13 +32,13 @@ class Api {
     };
     
 
-    getUserInfo() {
-        return fetch(`${this.url}/users/`, {
-          headers: {
-            Authorization: this.token,
-          },
-        }).then(onResponse);
-      }
+    // getUserInfo() {
+    //     return fetch(`${this.url}/users/`, {
+    //       headers: {
+    //         Authorization: this.token,
+    //       },
+    //     }).then(onResponse);
+    //   }
 }
 
 const api = new Api(config);

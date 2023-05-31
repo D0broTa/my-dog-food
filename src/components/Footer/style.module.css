@@ -3,12 +3,17 @@
     background-color: #ffe44d;
     justify-content: space-between;
     align-items: center;
-    padding-left: 50px 50px 0px 0px;
-    width: 100%;
-    bottom: 0;
-    
+    margin-top: 20px;
 }
+.logo {
+    margin-left: 50px;
+}
+.links {
+    width: 300px;
+    display: flex;
+    justify-content: space-around;
 
+}
 .socials {
     display: flex;
     gap: 10px;
@@ -20,4 +25,8 @@
 
 .social__link:hover {
     opacity: 1;
+}
+
+.contacts {
+    margin-right: 50px;
 }

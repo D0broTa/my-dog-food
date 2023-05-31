@@ -13,8 +13,14 @@ function User({logout}) {
     return (
         <>
             <div className={s.container}>
-                <Like></Like>
-                <Cart></Cart>
+                {   (Context.loggedIn === true) &&
+                    (
+                        <>
+                        <Like></Like>
+                        <Cart></Cart>
+                        </>
+                    )
+                }
                 
                 {
                     (Context.loggedIn === true) ? 

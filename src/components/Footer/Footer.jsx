@@ -1,31 +1,36 @@
 import Logo from "../Logo/Logo";
 import s from './style.module.css';
-
+import { Link } from "react-router-dom";
+import cn from 'classnames';
 import telegram from '../../images/Telegram.svg';
 import instagram from '../../images/Instagram.svg';
 import viber from '../../images/Viber.svg';
 import whatsapp from '../../images/WhatsApp.svg';
 import vk from '../../images/VK.svg';
+import classNames from "classnames";
 
 function Footer() {
     return (<footer className={s.footer}>
-        <div className={s.column}>
-            <Logo />
-            <p>© «Интернет-магазин DogFood.ru»</p>
+        <div className={cn(s.column, s.logo) }>
+            <Link to='/'><Logo /></Link>
+                <p>© «Интернет-магазин DogFood.ru»</p>
+        </div>
+        <div className={s.links}>
+            <div className={s.column}>
+            <Link to='/catalog'><p>Каталог</p></Link>
+            <Link to='/develop'><p>Акции</p></Link>
+            <Link to='/develop'><p>Новости</p></Link>
+            <Link to='/develop'><p>Отзывы</p></Link>
         </div>
         <div className={s.column}>
-            <p>Каталог</p>
-            <p>Акции</p>
-            <p>Новости</p>
-            <p>Отзывы</p>
+            <Link to='/develop'><p>Оплата и доставка</p></Link>
+            <Link to='/develop'><p>Часто спрашивают</p></Link>
+            <Link to='/develop'><p>Обратная связь</p></Link>
+            <Link to='/develop'><p>Контакты</p></Link>
         </div>
-        <div className={s.column}>
-            <p>Оплата и доставка</p>
-            <p>Часто спрашивают</p>
-            <p>Обратная связь</p>
-            <p>Контакты</p>
         </div>
-        <div className={s.column}>
+        
+        <div className={cn(s.column, s.contacts) }>
             <p>Мы на связи</p>
             <p>8 (999) 00-00-00</p>
             <p>dogfood.ru@gmail.com</p>

@@ -1,4 +1,5 @@
-function FAQ() {
+function FAQ({title}) {
+    document.title = `${title}`
     return (
         <div>Вопрос ответ</div>
     )

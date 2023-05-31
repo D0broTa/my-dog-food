@@ -1,0 +1,42 @@
+/* .card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+} */
+
+.title_container {
+    height: 60px;
+    display: flex;
+    height: 60px;
+    align-items: center;
+    justify-content: center;
+    padding-top: 10px;
+}
+.title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    
+}
+
+.raiting {
+    display: flex;
+    align-items: center;
+}
+
+.price_raiting_container {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+}
+.like_description_container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.image {
+    height: 160px;
+    align-items: center;
+}
+

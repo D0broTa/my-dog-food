@@ -1,29 +1,40 @@
-import React, {useState, useContext}  from "react";
+import React  from "react";
+import s from './style.module.css'
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Input from "../Input/Input";
 import Button from '../Button/Button';
-import { signin, signup, checkToken, signInStatus, checkSignIn } from "../../utils/auth";
+import { signin/* , signup, checkToken, signInStatus, checkSignIn  */} from "../../utils/auth";
 import {setItem} from '../../utils/localStorage'
-import ErrorAlert from '../Alert/ErrorAlert'
-import SuccessAlert from '../Alert/SuccessAlert'
-import Modal from "../Modal/Modal";
+// import ErrorAlert from '../Alert/ErrorAlert'
+// import SuccessAlert from '../Alert/SuccessAlert'
+// import Modal from "../Modal/Modal";
 import { UserContext } from "../../context/appContext";
-import Alert from "../Alert/Alert";
+// import Alert from "../Alert/Alert";
+import {ReactComponent as CloseEye} from '../../images/eye-slash-regular.svg'
+import {ReactComponent as OpenEye} from '../../images/eye-regular.svg'
 
 
-import s from "./style.module.css"
-import {EMAIL_REGEXP, PASSWORD_REGEXP, MESSAGES} from '../../utils/constants'
+// import {EMAIL_REGEXP, PASSWORD_REGEXP, MESSAGES} from '../../utils/constants'
 
-const LoginForm = () => {
-    const Context = useContext(UserContext)
-    const {setOpenErrorAlert, currentUser, setCurrentUser} = useContext(UserContext)
-    
+const LoginForm = ({title}) => {
+    const [visiblePassword, setVisiblePassword] = React.useState(false)
+    let type;
+    if (visiblePassword) {
+        type = 'text'
+       } else {
+        type = 'password'
+       }
+
+    document.title = `${title}`
+    const Context = React.useContext(UserContext)
+    const {setOpenErrorAlert, setOpenSuccessAlert} = React.useContext(UserContext)
+
     const openErrorAlert = () => {
         setOpenErrorAlert(true)
         console.log(Context)
     }
-
+    
     const location = useLocation();
     const navigate = useNavigate();
     
@@ -32,9 +43,10 @@ const LoginForm = () => {
             .then((data) => {
                 setItem('JWT', data.token);       //то сохраняем полученный от серера токен в localStorage
                 navigate('/catalog');             //и переходим на страницу каталога
+                setOpenSuccessAlert(true)
+                console.log(Context)
                 Context.currentUser.username = dataForm.username;
                 Context.loggedIn = true;
-                console.log(Context.loggedIn)
             })
             .catch(err => (openErrorAlert()))
         
@@ -65,10 +77,20 @@ const LoginForm = () => {
                     type="text"
                     placeholder="Username" />
                 {errors?.username && <div className={s.error}>{errors.username.message}</div>}
-                <Input {...register("password", {required: true, minLength : {value: 3, message: 'Минимум три символа'}})}
-                    type="text"
-                    placeholder="Password"/>
-                {errors?.password && <div className={s.error}>{errors.password.message}</div>}
+                <div>
+                    <Input
+                        className={s.password}
+                        {...register("password", {required: true, minLength : {value: 3, message: 'Минимум три символа'}})}
+                        type = {type}
+                        placeholder="Password" />
+                    {/* условный рендеринг значка глаза */}
+                    {
+                        (visiblePassword) ?
+                        (<OpenEye className={s.icon} onClick={()=>setVisiblePassword(false)}></OpenEye>) :
+                        (<CloseEye className={s.icon} onClick={()=>setVisiblePassword(true)}></CloseEye>)
+                    }
+                    {errors?.password && <div className={s.error}>{errors.password.message}</div>}
+                </div>
                 {/* <Input {...register("group", {required: true, pattern: {value: GROUP, message: MESSAGES.incorrectGroup}})}
                     type="group"
                     placeholder="group-8"/>
@@ -76,9 +98,11 @@ const LoginForm = () => {
                 <Link to='/reset' state={{backgroundLocation: location}} replace={true}>
                     <div className={s.info}>Восстановить пароль</div>
                 </Link>
-                <Button type='primary' >Войти</Button>
-                <Link to='/registration' state={{backgroundLocation: location}} replace={true}>
-                    <Button type='secondary'>Регистрация</Button>
+                <Button type='primary'>Войти</Button>
+                <Link to='/registration'  className={s.link} state={{backgroundLocation: location}} replace={true}>
+                    <Button type='secondary'>
+                        Регистрация
+                    </Button>
                 </Link>
             </form>
             

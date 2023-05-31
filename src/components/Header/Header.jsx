@@ -1,22 +1,29 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../../context/appContext";
 import Logo from "../Logo/Logo";
 import Search from "../Search/Search";
 import User from "../User/User"
 
 import s from "./style.module.css"
 
-function Header({loggedIn, logout, hi}) {
-    const twoFunc = () => {
-        logout();
-        hi()
-    }
+function Header({logout}) {
+    const Context = useContext(UserContext)
+
     return (<header className={s.header}>
-        <Link to='/'>
-            <Logo />
-        </Link>
-        <button onClick={twoFunc}>ClearLocalStorage</button>
-        <Search />
-        <User loggedIn={loggedIn} logout={logout} onClick={logout}></User>
+        { (Context.loggedIn === false) ?
+            (<Link to='/' className={s.logo}>
+                <Logo />
+            </Link>) :
+            (<Link to='/catalog' className={s.logo}>
+                <Logo  />
+            </Link>)
+        }
+        { (Context.loggedIn === true) &&
+          (<Search />)
+          
+        }
+        <User logout={logout} onClick={logout}></User>
 
     </header>
     )

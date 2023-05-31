@@ -7,10 +7,35 @@
 
 .error {
     color: red;
-    
 }
 
 .info {
     color: grey;
     font-size: 10px;
+}
+
+.link {
+    text-decoration: none;
+}
+.container_password {
+    width: 300px;
+    position: relative;
+}
+
+.password {
+    /* background: url('../../images/eye-slash-regular.svg') no-repeat center right; */
+    /* background-size: auto 50%; */
+    background-color: transparent;
+    border-radius: 10px;
+    border: 2px solid gray;
+    padding: 14px 0 14px 20px;
+    width: 276px;
+}
+
+.icon {
+    position: absolute;
+    width: 20px;
+    fill: grey;
+    top: 50%;
+    right: 40px;
 }

@@ -1,15 +1,10 @@
 import { useNavigate } from 'react-router-dom';
-import { useContext } from "react";
-import { UserContext } from "../../context/appContext";
-import Alert from "../Alert/Alert";
-import ErrorAlert from '../Alert/ErrorAlert'
 
 import s from './style.module.css';
 
 import { ReactComponent as Cross } from '../../images/ic-close-input.svg';
 
 const Modal = ( {children} ) => {
-    const Context = useContext(UserContext);
     const navigate = useNavigate();
 
     const onClose = () => { //функция закрытия модального окна, при нажатии на крестик

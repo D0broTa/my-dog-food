@@ -1,34 +1,43 @@
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
-import { useState, useEffect, useContext} from "react";
-import { signin, signup, checkToken } from "../../utils/auth";
+import { useState, useEffect, /* useContext */} from "react";
+// import { signin, signup, checkToken } from "../../utils/auth";
 import api from '../../utils/api'
 import s from './style.module.css'
-import { setItem, getItem, deleteItem, clearLocalStorage } from "../../utils/localStorage";
+import { /* setItem, */ getItem, deleteItem } from "../../utils/localStorage";
 import { UserContext } from "../../context/appContext";
 
 import React from "react";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import HomePage from "../Pages/HomePage";
-import CatalogPage from "../Pages/CatalogPage";
-import ProductPage from "../Pages/ProductPage";
-import FAQ from "../Pages/FAQ"
-import NotFound from "../Pages/NotFound"
+import HomePage from "../../Pages/HomePage";
+import CatalogPage from "../../Pages/CatalogPage";
+import ProductPage from "../../Pages/ProductPage";
+import RulesPage from "../../Pages/RulesPage";
+import FAQ from "../../Pages/FAQ"
+import DevelopPage from "../../Pages/DevelopPage";
+import NotFound from "../../Pages/NotFound"
+
 import RegistrationForm from "../Forms/RegistrationForm";
 import LoginForm from "../Forms/LoginForm";
 import ResetForm from "../Forms/ResetForm";
 import Modal from "../Modal/Modal";
 import Alert from "../Alert/Alert";
-import ErrorAlert from '../Alert/ErrorAlert'
+
 
 
 
 
 function App() {
   const [users, setUsers] = useState([]);
+  const [products, setProducts] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
   const [openErrorAlert, setOpenErrorAlert] = useState(false);
+  const [openSuccessAlert, setOpenSuccessAlert] = useState(false);
+  const [openRegistrationAlert, setOpenRegistrationAlert] = useState(false);
+  const [openResetAlert, setOpenResetAlert] = useState(false);
+  const [newUser, setNewUser] = useState({})
+  const [resetEmail, setResetEmail] = useState(null)
   // const [currentUser, setCurrentUser] = useState({
   //   id: null,
   //   email: null,
@@ -40,18 +49,16 @@ function App() {
   //   username: null,
   // });
   
-
   const navigate = useNavigate();
   const location = useLocation();
   const backgroundLocation = location.state?.backgroundLocation;
   const mainUrl = location.state?.mainUrl;
 
-  const Context = useContext(UserContext);
+  // const Context = useContext(UserContext);
 
   const logout = () => {            //выход из приложения
     deleteItem("JWT");
     setLoggedIn(false);
-    // Context.loggedIn = false;
     console.log('вы вышли')
     navigate('/')
   }
@@ -59,7 +66,6 @@ function App() {
   const handleTokenCheck = () => {                      //проверяем наличие токена
     if (getItem('JWT') !== null) {
       setLoggedIn(true)
-      // Context.loggedIn = true;
       console.log(`сейчас в локал сторадже JWT ${getItem('JWT')}. Вы авторизованы`);
     } else {
       console.log(`сейчас в локал сторадже JWT ${getItem('JWT')}. Авторизуйтесь`);
@@ -69,52 +75,60 @@ function App() {
   useEffect(() => {
     handleTokenCheck()                                  //проверка токена при перерендере
     }, [location.pathname])
-
+    
   useEffect(() => {                                     //грузим таблицу с пользователями
     api.getAllUsers().then((data) => setUsers(data))
+    
+    
   }, [])
 
-  //  useEffect(() => {                                     //записываем пользователя в контекст
-  //    if (Context.loggedIn === 'errorAuth') {
-  //      console.log(`Сейчас статус из контектса ${Context.loggedIn}`)
-  //   }
-  //  }, [Context.loggedIn])
-  
-  
-  
   useEffect(() => {                                     //записываем в контекст currentUser
     if (loggedIn === true) {
       for (let i = 0; i < users.length; i++) {
         if (users[i].username === currentUser.username) {
-        setCurrentUser(users[i]);
+          setCurrentUser(users[i]);
         }
       }
     }
-  })
+  }, [loggedIn, currentUser, users])
 
-// const hi = () => clearLocalStorage();
-// if (loggedIn) {console.log(`вывод в апе Контекста ${JSON.stringify(Context)}`)}
+  useEffect(()=> {                                        // грузим все продукты
+    api.getAllProducts().then((data) => setProducts(data))
+  }, [])
+
   return (
-  <UserContext.Provider value={{ currentUser, setCurrentUser, openErrorAlert, setOpenErrorAlert, loggedIn, setLoggedIn}}>
+  <UserContext.Provider value={
+    { currentUser, setCurrentUser,
+      products, setProducts,
+      openErrorAlert, setOpenErrorAlert,
+      openSuccessAlert, setOpenSuccessAlert,
+      openRegistrationAlert, setOpenRegistrationAlert,
+      openResetAlert, setOpenResetAlert,
+      loggedIn, setLoggedIn,
+      newUser, setNewUser,
+      resetEmail, setResetEmail,
+    }
+    }>
     <div className={s.mainContainer}>
-      <Header /* loggedIn={loggedIn} */  logout={logout} /* hi={hi} *//>
+      <Header logout={logout} />
       <div className={s.container}>
-        {<Alert className={s.alert}/> }
+        {<Alert /* className={s.alert} *//> }
         <Routes location={backgroundLocation ? {...backgroundLocation, pathname: mainUrl} : location}>
-            <Route path="/" element={<HomePage users={users} />} />
-            <Route path="/catalog" element={<CatalogPage />} />
-            <Route path="/product_id" element={<ProductPage />} />
-            <Route path="/FAQ" element={<FAQ />} />
-            <Route path="/login" element={<LoginForm users={users} />} />
-            <Route path="/registration" element={<RegistrationForm />} />
-            <Route path="/reset" element={<ResetForm />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="/" element={<HomePage users={users} title={`Первый проект`}/>} />
+            <Route path="/catalog" element={<CatalogPage title={`Каталог проекта`}/>} />
+            <Route path="/product_id" element={<ProductPage title={`Страница продукта`}/>} />
+            <Route path="/rules" element={<RulesPage title={`Пользовательсткое соглашение`}/>} />
+            <Route path="/FAQ" element={<FAQ title={`Вопросы и ответы`}/>} />
+            <Route path="/login" element={<LoginForm users={users} title={`Авторизация`}/>} />
+            <Route path="/registration" element={<RegistrationForm title={`Регистрация`}/>} />
+            <Route path="/reset" element={<ResetForm title={`Восстановление пароля`}/>} />
+            <Route path="/develop" element={<DevelopPage title={`Страница в разработке`}/>} />
+            <Route path="*" element={<NotFound title={`Проверьте URL адрес`}/>} />
           </Routes>
         {backgroundLocation && (<Routes>
           <Route path="/login" element={
             <Modal>
-              <ErrorAlert className={s.errorAuth}/>
-              <LoginForm></LoginForm>
+              <LoginForm ></LoginForm>
             </Modal>} />
           <Route path="/registration" element={
             <Modal>
