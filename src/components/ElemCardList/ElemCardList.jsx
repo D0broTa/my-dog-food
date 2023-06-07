@@ -1,7 +1,7 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -41,23 +41,26 @@ export default function ElemCardList({...product}) {
 
   return (
     <Card sx={{ maxWidth: 345, borderRadius: '20px' }}>
-        <CardActionArea sx={{display: 'flex', flexDirection: 'column'}}>
-            <div className={s.title_container}>
-                <Typography component="div" className={s.title} gutterBottom variant="h5" align="center">
-                    {product.title}
-                </Typography>
-            </div>
-            <img className={s.image} src={product.image} alt={product.description} />
-            <CardContent component="div" className={s.price_raiting_container}>
-                <Typography align='left' variant="h4" color="text.secondary">
-                    {product.price} $
-                </Typography>
-                <Typography align="right" variant="inherit" color="text.secondary" component="div" className={s.raiting}>
-                    <Rating name="read-only"  value={product.rating.rate} precision={0.2} readOnly />
-                    {product.rating.rate}
-                </Typography>
-            </CardContent>
-        </CardActionArea>
+        <Link to={`/products/${product.id}`} className={s.link}>
+            <CardActionArea sx={{display: 'flex', flexDirection: 'column'}}>
+                <div className={s.title_container}>
+                    <Typography component="div" className={s.title} gutterBottom variant="h5" align="center">
+                        {product.title}
+                    </Typography>
+                </div>
+                <img className={s.image} src={product.image} alt={product.description} />
+                <CardContent component="div" className={s.price_raiting_container}>
+                    <Typography align='left' variant="h4" color="text.secondary">
+                        {product.price} $
+                    </Typography>
+                    <Typography align="right" variant="inherit" color="text.secondary" component="div" className={s.raiting}>
+                        <Rating name="read-only"  value={product.rating.rate} precision={0.1} readOnly />
+                        {product.rating.rate}
+                    </Typography>
+                </CardContent>
+            </CardActionArea>
+        </Link>
+            
         <CardActions component="div" className={s.like_description_container}>
             <IconButton aria-label="add to favorites" color={color} onClick={handleLike}>
                 <FavoriteIcon />

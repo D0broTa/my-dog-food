@@ -23,14 +23,22 @@ class Api {
     };
     getAllUsers() {                                                 //получаем имеющихся пользователей
         return fetch(`${this.url}/users`, {
-            headers: {
-                Authorization: this.token,
-                'Content-Type': 'application/json'
-            },
+            // headers: {
+            //     Authorization: this.token,
+            //     'Content-Type': 'application/json'
+            // },
         })
         .then(onResponse);
     };
-    
+    getProduct(id) {
+        return fetch(`${this.url}/products/${id}`)
+        .then(onResponse);
+    }
+
+    // fetch('https://fakestoreapi.com/products/1')
+    // .then(res=>res.json())
+    // .then(json=>console.log(json))
+
 
     // getUserInfo() {
     //     return fetch(`${this.url}/users/`, {

@@ -30,6 +30,7 @@ import Alert from "../Alert/Alert";
 function App() {
   const [users, setUsers] = useState([]);
   const [products, setProducts] = useState([]);
+  const [searchResultArray, setSearchResultArray] = useState(null)
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
   const [openErrorAlert, setOpenErrorAlert] = useState(false);
@@ -72,9 +73,9 @@ function App() {
     }
   }
 
-  useEffect(() => {
-    handleTokenCheck()                                  //проверка токена при перерендере
-    }, [location.pathname])
+  useEffect(() => {                                     //проверка токена при перерендере
+    handleTokenCheck()                                  
+    }, [location.pathname, searchResultArray])
     
   useEffect(() => {                                     //грузим таблицу с пользователями
     api.getAllUsers().then((data) => setUsers(data))
@@ -100,6 +101,7 @@ function App() {
   <UserContext.Provider value={
     { currentUser, setCurrentUser,
       products, setProducts,
+      searchResultArray, setSearchResultArray,
       openErrorAlert, setOpenErrorAlert,
       openSuccessAlert, setOpenSuccessAlert,
       openRegistrationAlert, setOpenRegistrationAlert,
@@ -116,7 +118,7 @@ function App() {
         <Routes location={backgroundLocation ? {...backgroundLocation, pathname: mainUrl} : location}>
             <Route path="/" element={<HomePage users={users} title={`Первый проект`}/>} />
             <Route path="/catalog" element={<CatalogPage title={`Каталог проекта`}/>} />
-            <Route path="/product_id" element={<ProductPage title={`Страница продукта`}/>} />
+            <Route path="/products/:productId" element={<ProductPage title={`Страница продукта`}/>} />
             <Route path="/rules" element={<RulesPage title={`Пользовательсткое соглашение`}/>} />
             <Route path="/FAQ" element={<FAQ title={`Вопросы и ответы`}/>} />
             <Route path="/login" element={<LoginForm users={users} title={`Авторизация`}/>} />

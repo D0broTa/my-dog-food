@@ -1,0 +1,87 @@
+/* Общие стили */
+
+.container {
+    display: flex;
+    gap: 30px;
+    margin: 0 30px 0 30px;
+}
+.title {
+    font-size: 36px;
+    font-weight: 700;
+}
+
+/* Левый контейнер */
+
+.left_container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 700px;
+}
+.image {
+    width: 488px;
+    height: 488px;
+}
+.info {
+    display: flex;
+    justify-content: space-between;
+}
+.info_rigth {
+    display: flex;
+    gap: 8px;
+}
+.rating {
+    display: flex;
+}
+
+/* Центральный контейнер */
+
+.center_container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.carousel_image {
+    width: 80px;
+    height: 80px;
+    filter: drop-shadow(0px 0px 1px rgba(40, 41, 61, 0.02)) drop-shadow(0px 2px 16px rgba(96, 97, 112, 0.16));
+    border-radius: 16px;
+}
+
+
+/* Правый контейнер */
+
+.right_container {
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.count_quantity_and_add_cart {
+    display: flex;
+    gap: 30px;
+}
+
+.count_quantity {
+    display: inline-block;
+    border: 1px solid black;
+    border-radius: 20px;
+    margin: 10px 0 10px 0;
+}
+.delivery {
+    display: flex;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 10px;
+    width: 100%;
+}
+
+/* Нижний контейнер */
+
+.bottom_container {
+    margin: 0 30px 0 30px;
+}
+
+
